@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Google Search Engine Sitemap Pointer
+Sitemap: https://awais911.github.io/AppVerdix/sitemap.xml
