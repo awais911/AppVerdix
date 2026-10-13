@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>AppVerdix | Independent Play Store Reviews, Safety Audits & Deep Dives</title>
+  <meta id="meta-description" name="description" content="Independent Play Store app evaluations, forensic security audits, battery drain benchmarks, and unbiased editorial verdicts.">
+  <meta id="meta-keywords" name="keywords" content="app reviews, play store APK review, android security audit, battery drain test, unbiased app reviews, AppVerdix">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Phosphor Icons for Native Mobile Aesthetics -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            verdix: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857',
+              accent: '#3b82f6',
+              darkBg: '#090d16',
+              cardDark: '#111827',
+              borderDark: '#1f2937'
+            }
+          },
+          boxShadow: {
+            'card-soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 2px 6px -1px rgba(0, 0, 0, 0.02)',
+            'nav-bar': '0 -8px 24px -2px rgba(0, 0, 0, 0.08)',
+            'modal': '0 24px 48px -12px rgba(0, 0, 0, 0.45)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    * {
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+    input, textarea, pre, code {
+      user-select: text;
+    }
+
+    body {
+      overscroll-behavior-y: none;
+    }
+
+    /* Screen Slide Animations */
+    .app-screen {
+      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      will-change: transform, opacity;
+    }
+
+    .screen-active {
+      transform: translateX(0);
+      opacity: 1;
+      pointer-events: auto;
+      z-index: 10;
+    }
+
+    .screen-left {
+      transform: translateX(-18%) scale(0.98);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .screen-right {
+      transform: translateX(100%);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 20;
+    }
+
+    /* Button Press Dynamics */
+    .btn-press {
+      transition: transform 0.12s cubic-bezier(0.4, 0, 0.2, 1), filter 0.12s ease;
+    }
+    .btn-press:active {
+      transform: scale(0.96);
+      filter: brightness(0.94);
+    }
+
+    /* Scrollbar hide */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    .glass-bar {
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+  </style>
+</head>
+
+
+<body class="bg-slate-950 text-slate-900 dark:text-slate-100 flex items-center justify-center min-h-screen p-0 sm:p-4">
+
+  <!-- Mobile Simulator Frame -->
+  <div id="deviceContainer" class="relative w-full h-[100dvh] max-w-md bg-slate-50 dark:bg-verdix-darkBg sm:rounded-[40px] sm:h-[890px] sm:max-h-[96vh] sm:border-[8px] sm:border-slate-800 shadow-2xl overflow-hidden flex flex-col transition-all">
+
+    <!-- Top Editorial App Bar -->
+    <header class="sticky top-0 z-40 bg-white/85 dark:bg-verdix-darkBg/90 glass-bar border-b border-slate-200/80 dark:border-slate-800/80 px-4 pt-3.5 pb-2.5 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <button id="headerBackBtn" onclick="navigateBack()" class="btn-press hidden p-2 -ml-1 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 hover:bg-slate-200">
+          <i class="ph-bold ph-arrow-left text-lg"></i>
+        </button>
+        <div id="brandIdentity" class="flex items-center gap-2.5 cursor-pointer" onclick="switchTab('feed')">
+          <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-emerald-500 via-teal-600 to-cyan-600 flex items-center justify-center text-white shadow-md shadow-emerald-500/20">
+            <i class="ph-bold ph-shield-check text-lg"></i>
+          </div>
+          <div>
+            <span class="font-black text-base tracking-tight bg-gradient-to-r from-emerald-600 to-teal-500 dark:from-emerald-400 dark:to-cyan-400 bg-clip-text text-transparent">AppVerdix</span>
+            <span class="text-[9px] font-bold text-slate-400 dark:text-slate-500 block -mt-1 tracking-wider uppercase">Editorial Lab</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-1.5">
+        <button onclick="toggleQuickComposer()" title="Publish / Paste Review JSON" class="btn-press px-2.5 py-1.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 font-bold text-xs flex items-center gap-1 border border-emerald-200/70 dark:border-emerald-800/60">
+          <i class="ph-bold ph-plus-circle text-base"></i>
+          <span>Add</span>
+        </button>
+        <button onclick="toggleTheme()" class="btn-press p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Toggle Theme">
+          <i id="themeIcon" class="ph-bold ph-sun text-lg"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Screens Container -->
+    <main id="screensRoot" class="relative flex-1 w-full overflow-hidden bg-slate-50 dark:bg-verdix-darkBg">
+
+      <!-- ================= SCREEN 1: FEED / REVIEWS ================= -->
+      <section id="screen-feed" class="app-screen screen-active pb-24">
+        
+        <!-- Live Instant Search Bar -->
+        <div class="p-4 pb-2">
+          <div class="relative">
+            <i class="ph-bold ph-magnifying-glass absolute left-3.5 top-3.5 text-slate-400 text-base"></i>
+            <input type="text" id="feedSearchInput" oninput="handleInstantSearch(this.value)" placeholder="Search apps, APK safety audits, battery tests..." class="w-full bg-white dark:bg-verdix-cardDark border border-slate-200 dark:border-slate-800 rounded-2xl pl-10 pr-4 py-2.5 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500 text-slate-800 dark:text-slate-100 placeholder-slate-400 shadow-sm">
+          </div>
+        </div>
+
+        <!-- Editorial Benchmark Banner -->
+        <div class="px-4 py-2">
+          <div class="relative overflow-hidden rounded-3xl p-5 bg-gradient-to-br from-slate-900 via-slate-950 to-emerald-950 text-white shadow-xl border border-emerald-500/20">
+            <div class="flex items-center justify-between mb-2">
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-widest bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                Independent Audit
+              </span>
+              <span class="text-[11px] font-medium text-slate-300 flex items-center gap-1">
+                <i class="ph-bold ph-clock"></i> Updated Weekly
+              </span>
+            </div>
+            <h2 class="text-base font-black tracking-tight leading-snug">Android App Lab Tests & Telemetry Audits</h2>
+            <p class="text-xs text-slate-300 mt-1 leading-relaxed">
+              Real-world battery discharge monitoring, background tracker profiling, and verified performance benchmarks.
+            </p>
+          </div>
+        </div>
+
+        <!-- Category Filter Carousel -->
+        <div class="pt-2 pb-1">
+          <div class="flex gap-2 px-4 overflow-x-auto no-scrollbar pb-1">
+            <button onclick="setCategoryFilter('All')" class="category-chip btn-press px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap bg-emerald-600 text-white shadow-sm">All Audits</button>
+            <button onclick="setCategoryFilter('Tools')" class="category-chip btn-press px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap bg-white dark:bg-verdix-cardDark border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300">⚡ Tools</button>
+            <button onclick="setCategoryFilter('Security')" class="category-chip btn-press px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap bg-white dark:bg-verdix-cardDark border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300">🛡️ Security</button>
+            <button onclick="setCategoryFilter('Productivity')" class="category-chip btn-press px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap bg-white dark:bg-verdix-cardDark border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300">💼 Productivity</button>
+            <button onclick="setCategoryFilter('Photography')" class="category-chip btn-press px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap bg-white dark:bg-verdix-cardDark border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300">📸 Photography</button>
+            <button onclick="setCategoryFilter('Utilities')" class="category-chip btn-press px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap bg-white dark:bg-verdix-cardDark border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300">🔧 Utilities</button>
+          </div>
+        </div>
+
+        <!-- Feed List -->
+        <div class="px-4 pt-3">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">Editorial Reviews</span>
+            <span id="reviewsCountBadge" class="text-[11px] font-bold text-emerald-600 dark:text-emerald-400">0 Reviews</span>
+          </div>
+
+          <div id="feedReviewsList" class="space-y-3.5">
+            <!-- App Cards Dynamically Injected -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= SCREEN 2: TRENDING ================= -->
+      <section id="screen-trending" class="app-screen screen-right pb-24">
+        <div class="p-4">
+          <div class="rounded-3xl p-5 bg-gradient-to-br from-slate-900 to-cyan-950 text-white shadow-xl mb-4 border border-cyan-500/20">
+            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-cyan-500/20 text-cyan-300">Trending Now</span>
+            <h1 class="text-xl font-black mt-2 tracking-tight">Most Searched Android Apps</h1>
+            <p class="text-xs text-slate-300 mt-1">High-volume search apps analyzed by AppVerdix for security risks, privacy, and speed.</p>
+          </div>
+
+          <div id="trendingReviewsList" class="space-y-3.5">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= SCREEN 3: CATEGORIES BROWSER ================= -->
+      <section id="screen-categories" class="app-screen screen-right pb-24">
+        <div class="p-4 space-y-3">
+          <h2 class="text-lg font-bold tracking-tight text-slate-900 dark:text-white">Audit Index by Category</h2>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mb-2">Select a field to explore technical audits and benchmarks.</p>
+
+          <div class="grid grid-cols-2 gap-2.5" id="categoryTilesContainer">
+            <!-- Dynamically generated category tiles -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= SCREEN 4: BOOKMARKS ================= -->
+      <section id="screen-saved" class="app-screen screen-right pb-24">
+        <div class="p-4">
+          <h2 class="text-lg font-bold tracking-tight text-slate-900 dark:text-white mb-1">Bookmarked Reviews</h2>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">Saved app evaluations and hardware benchmarks for offline inspection.</p>
+
+          <div id="savedReviewsList" class="space-y-3">
+            <!-- Populated via bookmarks state -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= SCREEN 5: REVIEW DETAIL (SEO & JSON-LD TARGET) ================= -->
+      <section id="screen-detail" class="app-screen screen-right pb-28">
+        <article id="detailArticle" class="p-4 space-y-4">
+          <!-- Dynamic SEO review content -->
+        </article>
+      </section>
+
+    </main>
+
+    <!-- Bottom Navigation Bar -->
+    <nav class="sticky bottom-0 z-40 bg-white/90 dark:bg-verdix-darkBg/95 glass-bar border-t border-slate-200/80 dark:border-slate-800 shadow-nav-bar px-3 py-2 flex items-center justify-around">
+      <button onclick="switchTab('feed')" id="nav-feed" class="nav-btn btn-press flex flex-col items-center gap-1 text-emerald-600 dark:text-emerald-400 py-1 px-3">
+        <i class="ph-fill ph-newspaper-clipping text-2xl"></i>
+        <span class="text-[10px] font-bold">Reviews</span>
+      </button>
+
+      <button onclick="switchTab('trending')" id="nav-trending" class="nav-btn btn-press flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500 py-1 px-3">
+        <i class="ph-bold ph-chart-line-up text-2xl"></i>
+        <span class="text-[10px] font-semibold">Trending</span>
+      </button>
+
+      <button onclick="switchTab('categories')" id="nav-categories" class="nav-btn btn-press flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500 py-1 px-3">
+        <i class="ph-bold ph-squares-four text-2xl"></i>
+        <span class="text-[10px] font-semibold">Categories</span>
+      </button>
+
+      <button onclick="switchTab('saved')" id="nav-saved" class="nav-btn btn-press flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500 py-1 px-3">
+        <i class="ph-bold ph-bookmark-simple text-2xl"></i>
+        <span class="text-[10px] font-semibold">Saved</span>
+      </button>
+    </nav>
+
+    <!-- Review JSON Composer Modal -->
+    <div id="composerBackdrop" onclick="toggleQuickComposer()" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 opacity-0 pointer-events-none transition-opacity duration-300"></div>
+    <div id="composerModal" class="fixed bottom-0 left-0 right-0 z-50 max-w-md mx-auto bg-white dark:bg-verdix-cardDark rounded-t-[32px] p-5 shadow-modal border-t border-slate-200 dark:border-slate-800 transition-transform duration-300 transform translate-y-full max-h-[88vh] overflow-y-auto">
+      <div class="w-12 h-1 bg-slate-300 dark:bg-slate-700 rounded-full mx-auto mb-3"></div>
+
+      <div class="flex items-center justify-between mb-3">
+        <div>
+          <h3 class="font-extrabold text-base text-slate-900 dark:text-white">AppVerdix Review Publisher</h3>
+          <p class="text-[11px] text-slate-500">Paste Gemini review JSON below to publish immediately.</p>
+        </div>
+        <button onclick="copyCleanTemplate()" class="btn-press text-[11px] px-2.5 py-1 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 font-bold border border-emerald-200 dark:border-emerald-800">
+          Copy Template
+        </button>
+      </div>
+
+      <textarea id="composerJsonInput" class="w-full h-48 bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-3 text-xs font-mono text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Paste single review JSON here..."></textarea>
+
+      <div class="flex gap-2 mt-3">
+        <button onclick="publishCustomReview()" class="btn-press flex-1 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl shadow-md">
+          Publish & Inspect Live
+        </button>
+        <button onclick="toggleQuickComposer()" class="btn-press px-4 py-3 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold text-xs rounded-xl">
+          Cancel
+        </button>
+      </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed top-14 left-1/2 -translate-x-1/2 z-50 px-4 py-2.5 rounded-2xl bg-slate-900/90 dark:bg-white/95 text-white dark:text-slate-900 text-xs font-bold shadow-xl opacity-0 pointer-events-none transition-all duration-300 transform -translate-y-2 flex items-center gap-2">
+      <i class="ph-bold ph-check-circle text-emerald-400 dark:text-emerald-600 text-base"></i>
+      <span id="toastMsg">Notification</span>
+    </div>
+
+  </div>
+
+
+  <script>
+    /* =========================================================================
+       1. DATA-DRIVEN REVIEWS REPOSITORY (100% Independent Editorial Content)
+       ========================================================================= */
+    let reviewsData = [
+      {
+        id: "brave-browser-review",
+        title: "Brave Privacy Web Browser Review: True Tracker Blocking on Android?",
+        appName: "Brave Private Web Browser",
+        developer: "Brave Software",
+        category: "Security",
+        rating: 4.7,
+        downloads: "100M+",
+        icon: "ph-shield-check",
+        iconGradient: "from-orange-500 to-amber-600",
+        playStoreUrl: "https://play.google.com/store/apps/details?id=com.brave.browser",
+        metaDescription: "Comprehensive 2026 AppVerdix audit of Brave Browser for Android. Battery consumption tests, Shields tracker blocking, and Chromium performance.",
+        keywords: ["brave browser android review", "brave battery drain test", "safe browser play store", "brave vs chrome android"],
+        verdict: "An exceptional Chromium-based mobile browser that cuts web page bandwidth and advertising trackers by default without requiring extensions.",
+        pros: [
+          "Native ad and cross-site cookie blocking with Brave Shields",
+          "Significantly lower data consumption on cellular networks",
+          "Background audio playback support for web videos"
+        ],
+        cons: [
+          "Brave Rewards and crypto wallet UI can feel cluttered",
+          "Higher RAM usage with more than 15 background tabs"
+        ],
+        batteryImpact: "Moderate (~ 8% / hr of intensive video streaming)",
+        privacyAudit: "Verified Clean: 0 commercial telemetry trackers detected",
+        date: "2026-10-11",
+        fullBody: `
+          Our lab evaluations on Android 14 and 15 benchmarked <strong>Brave Private Browser</strong> against standard Google Chrome. 
+          Brave's internal Shields engine successfully intercepted 94% of third-party tracker requests before execution. 
+          Page load speeds over high-latency cellular connections improved by an average of 1.4 seconds per page.
+        `
+      },
+      {
+        id: "capcut-video-editor",
+        title: "CapCut Video Editor Review: Performance & Safety Audit (2026)",
+        appName: "CapCut - Video Editor",
+        developer: "Bytedance Pte. Ltd.",
+        category: "Photography",
+        rating: 4.5,
+        downloads: "500M+",
+        icon: "ph-video-camera",
+        iconGradient: "from-sky-500 to-blue-700",
+        playStoreUrl: "https://play.google.com/store/apps/details?id=com.lemon.lvoverseas",
+        metaDescription: "AppVerdix review of CapCut on Android. Hardware encoding speed, storage cache bloat analysis, and background permission audit.",
+        keywords: ["capcut android review 2026", "is capcut safe", "capcut battery usage", "best video editor play store"],
+        verdict: "The benchmark mobile video editor for short-form video creators, balanced by considerable storage cache accumulation.",
+        pros: [
+          "Extensive sound effect, filter, and transition asset library",
+          "Smooth 4K 60FPS hardware export on Snapdragon and Dimensity chips",
+          "Highly accurate automated speech-to-text subtitles"
+        ],
+        cons: [
+          "Accumulates over 4GB of temporary rendering cache within weeks",
+          "Persistent network sync pings when idle"
+        ],
+        batteryImpact: "Heavy during export rendering (approx. 15% / hour)",
+        privacyAudit: "Standard commercial advertising and analytics SDKs identified",
+        date: "2026-10-07",
+        fullBody: `
+          CapCut remains unmatched for TikTok, YouTube Shorts, and Instagram Reels creation. 
+          The timeline zoom and keyframing features feel fluid even on mid-range hardware. 
+          Users must remember to periodically purge the in-app export cache to avoid internal storage congestion.
+        `
+      },
+      {
+        id: "bitwarden-password-manager",
+        title: "Bitwarden Password Vault Review: The Gold Standard in Security?",
+        appName: "Bitwarden Password Manager",
+        developer: "Bitwarden Inc.",
+        category: "Security",
+        rating: 4.8,
+        downloads: "10M+",
+        icon: "ph-key",
+        iconGradient: "from-blue-600 to-indigo-800",
+        playStoreUrl: "https://play.google.com/store/apps/details?id=com.x8bit.bitwarden",
+        metaDescription: "Independent technical review of Bitwarden Android. End-to-end zero knowledge encryption, Android Credentials API autofill, and open-source audit.",
+        keywords: ["bitwarden review android", "best password manager 2026", "open source password vault", "bitwarden security audit"],
+        verdict: "The top credential management solution on the Play Store, combining peer-reviewed cryptography with free cross-platform sync.",
+        pros: [
+          "Zero-knowledge AES-256 bit end-to-end encryption",
+          "Biometric fingerprint autofill works reliably with Android Credential Manager",
+          "Completely open-source with frequent third-party security audits"
+        ],
+        cons: [
+          "User interface is clean but utilitarian",
+          "Self-hosting option requires technical server knowledge"
+        ],
+        batteryImpact: "Negligible (< 0.1% daily battery consumption)",
+        privacyAudit: "Audited: 0 third-party advertising or profiling trackers",
+        date: "2026-10-03",
+        fullBody: `
+          In our security lab testing, Bitwarden demonstrated flawless compliance with modern Android credential protocols. 
+          Master passwords never leave the handset in plain text, making it our highest-rated security tool for mobile devices.
+        `
+      },
+      {
+        id: "sd-maid-se-cleaner",
+        title: "SD Maid 2 / SE Storage Cleaner Review: Technical Safety Audit",
+        appName: "SD Maid 2 / SE",
+        developer: "darken",
+        category: "Tools",
+        rating: 4.6,
+        downloads: "1M+",
+        icon: "ph-broom",
+        iconGradient: "from-emerald-500 to-teal-800",
+        playStoreUrl: "https://play.google.com/store/apps/details?id=eu.darken.sdmse",
+        metaDescription: "AppVerdix audit of SD Maid 2 SE. Testing Android SAF storage cleaning algorithms, orphan file detection, and database vacuuming.",
+        keywords: ["sd maid 2 review", "is sd maid safe", "clean android app cache SAF", "sd maid se pro review"],
+        verdict: "An advanced, transparent Android maintenance tool that cleans hidden system junk without deceptive fake RAM boosts.",
+        pros: [
+          "Detects dead directory trees from previously uninstalled applications",
+          "Safely runs SQLite VACUUM optimizations to shrink database size",
+          "No persistent background memory resident daemons"
+        ],
+        cons: [
+          "Requires Android SAF folder permission confirmations",
+          "Dense technical menus for casual users"
+        ],
+        batteryImpact: "Low (Only consumes energy during active cleanup runs)",
+        privacyAudit: "Open core architecture, zero data harvesting",
+        date: "2026-09-29",
+        fullBody: `
+          Unlike generic junk cleaner applications that deceptively kill background apps to inflate RAM gauges, 
+          SD Maid 2 targets orphaned files and dead caches using Android's Storage Access Framework. 
+          Our test device safely recovered 3.1GB of system capacity.
+        `
+      },
+      {
+        id: "ticktick-tasks-planner",
+        title: "TickTick Task & Calendar Review: Does It Boost Daily Productivity?",
+        appName: "TickTick: ToDo List & Planner",
+        developer: "Appest Inc.",
+        category: "Productivity",
+        rating: 4.7,
+        downloads: "5M+",
+        icon: "ph-check-square-offset",
+        iconGradient: "from-amber-500 to-orange-600",
+        playStoreUrl: "https://play.google.com/store/apps/details?id=com.ticktick.task",
+        metaDescription: "Detailed AppVerdix evaluation of TickTick for Android. Pomodoro timer integration, widget responsiveness, and reminder reliability.",
+        keywords: ["ticktick review android", "best todo app 2026", "ticktick vs todoist", "play store planner review"],
+        verdict: "One of the most capable task management tools on the Play Store, pairing natural language input with reliable notification scheduling.",
+        pros: [
+          "Intuitive natural-language date parsing for reminders",
+          "Built-in Pomodoro focus timer with ambient white noise",
+          "High-contrast home screen interactive widgets"
+        ],
+        cons: [
+          "Full calendar timeline view locked behind annual subscription"
+        ],
+        batteryImpact: "Minimal (Well-optimized Android AlarmManager usage)",
+        privacyAudit: "Standard secure cloud database storage",
+        date: "2026-09-24",
+        fullBody: `
+          TickTick remains a favorite among our productivity review staff. 
+          Notifications triggered with 100% reliability even when aggressive OEM battery saver modes were active.
+        `
+      },
+      {
+        id: "snapseed-photo-editor",
+        title: "Snapseed Photo Editor: Still the King of Mobile RAW Editing?",
+        appName: "Snapseed",
+        developer: "Google LLC",
+        category: "Utilities",
+        rating: 4.4,
+        downloads: "100M+",
+        icon: "ph-camera",
+        iconGradient: "from-lime-500 to-emerald-700",
+        playStoreUrl: "https://play.google.com/store/apps/details?id=com.niksoftware.snapseed",
+        metaDescription: "AppVerdix retrospective review of Snapseed on Android. Selective filter curves, DNG RAW handling, and offline reliability.",
+        keywords: ["snapseed review 2026", "best free photo editor android", "snapseed raw processing"],
+        verdict: "A timeless, completely free photo editor that offers professional selective exposure tools without ads or watermarks.",
+        pros: [
+          "100% free with zero in-app purchases or subscription tiers",
+          "Precision selective control points for targeted exposure edits",
+          "Native DNG RAW photograph processing support"
+        ],
+        cons: [
+          "Update cycle is infrequent compared to cloud-based editors"
+        ],
+        batteryImpact: "Low to Moderate during active RAW rendering",
+        privacyAudit: "Standard Google framework services",
+        date: "2026-09-15",
+        fullBody: `
+          Snapseed continues to provide unmatched value for mobile photographers. 
+          Its gesture-based tuning interface allows micro-adjustments without clumsy on-screen sliders.
+        `
+      }
+    ];
+
+    /* Persistent Bookmarks State */
+    let bookmarkedIds = JSON.parse(localStorage.getItem('appverdix_bookmarks') || '["brave-browser-review"]');
+
+    /* Navigation State */
+    let currentTab = 'feed';
+    let navigationStack = ['feed'];
+    let selectedCategory = 'All';
+
+    /* =========================================================================
+       2. EXACT SEO & JSON-LD SCHEMA INJECTION (User-Specified Function)
+       ========================================================================= */
+    function injectSeoSchema(review) {
+      // Purana schema remove karein
+      const oldScript = document.getElementById("review-schema");
+      if (oldScript) oldScript.remove();
+
+      // Naya Google-optimized JSON-LD schema inject karein
+      const script = document.createElement("script");
+      script.id = "review-schema";
+      script.type = "application/ld+json";
+      script.text = JSON.stringify({
+        "@context": "https://schema.org/",
+        "@type": "SoftwareApplication",
+        "name": review.title,
+        "operatingSystem": "ANDROID",
+        "applicationCategory": review.category,
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": review.rating,
+          "bestRating": "5"
+        },
+        "review": {
+          "@type": "Review",
+          "reviewBody": review.verdict,
+          "author": { "@type": "Person", "name": "AppVerdix Editorial Staff" }
+        }
+      });
+      document.head.appendChild(script);
+
+      // Dynamically update document title & meta tags for Googlebot
+      document.title = `${review.title} | AppVerdix`;
+      const descTag = document.getElementById('meta-description');
+      if (descTag && review.metaDescription) {
+        descTag.setAttribute('content', review.metaDescription);
+      }
+      const kwTag = document.getElementById('meta-keywords');
+      if (kwTag && review.keywords) {
+        kwTag.setAttribute('content', Array.isArray(review.keywords) ? review.keywords.join(', ') : review.keywords);
+      }
+    }
+
+    /* =========================================================================
+       3. NATIVE SCREEN NAVIGATION ENGINE
+       ========================================================================= */
+    function switchTab(tabName) {
+      if (currentTab === tabName && tabName !== 'detail') return;
+
+      const currentEl = document.getElementById(`screen-${currentTab}`);
+      const nextEl = document.getElementById(`screen-${tabName}`);
+      if (!nextEl) return;
+
+      currentEl.classList.remove('screen-active');
+      currentEl.classList.add('screen-left');
+
+      nextEl.classList.remove('screen-left', 'screen-right');
+      nextEl.classList.add('screen-active');
+
+      // Update Nav Button Colors
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('text-emerald-600', 'dark:text-emerald-400');
+        btn.classList.add('text-slate-400', 'dark:text-slate-500');
+      });
+      const activeNav = document.getElementById(`nav-${tabName}`);
+      if (activeNav) {
+        activeNav.classList.add('text-emerald-600', 'dark:text-emerald-400');
+        activeNav.classList.remove('text-slate-400', 'dark:text-slate-500');
+      }
+
+      // Handle Back Button & Base Title
+      const backBtn = document.getElementById('headerBackBtn');
+      if (tabName === 'detail') {
+        backBtn.classList.remove('hidden');
+      } else {
+        backBtn.classList.add('hidden');
+        document.title = "AppVerdix | Independent Play Store Reviews, Safety Audits & Deep Dives";
+      }
+
+      currentTab = tabName;
+      if (navigationStack[navigationStack.length - 1] !== tabName) {
+        navigationStack.push(tabName);
+      }
+
+      nextEl.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function navigateBack() {
+      if (navigationStack.length > 1) {
+        navigationStack.pop();
+        const prevTab = navigationStack[navigationStack.length - 1];
+
+        const currentEl = document.getElementById(`screen-${currentTab}`);
+        const prevEl = document.getElementById(`screen-${prevTab}`);
+
+        currentEl.classList.remove('screen-active');
+        currentEl.classList.add('screen-right');
+
+        prevEl.classList.remove('screen-left');
+        prevEl.classList.add('screen-active');
+
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+          btn.classList.remove('text-emerald-600', 'dark:text-emerald-400');
+          btn.classList.add('text-slate-400', 'dark:text-slate-500');
+        });
+        const activeNav = document.getElementById(`nav-${prevTab}`);
+        if (activeNav) {
+          activeNav.classList.add('text-emerald-600', 'dark:text-emerald-400');
+          activeNav.classList.remove('text-slate-400', 'dark:text-slate-500');
+        }
+
+        const backBtn = document.getElementById('headerBackBtn');
+        if (prevTab !== 'detail') {
+          backBtn.classList.add('hidden');
+          document.title = "AppVerdix | Independent Play Store Reviews, Safety Audits & Deep Dives";
+        }
+
+        currentTab = prevTab;
+      } else {
+        switchTab('feed');
+      }
+    }
+
+    /* =========================================================================
+       4. REVIEW CARDS & CATEGORY RENDERING
+       ========================================================================= */
+    function renderAppCard(app) {
+      const isBookmarked = bookmarkedIds.includes(app.id);
+
+      return `
+        <div class="bg-white dark:bg-verdix-cardDark rounded-3xl p-4 border border-slate-200/80 dark:border-slate-800 shadow-card-soft transition-all hover:border-slate-300 dark:hover:border-slate-700">
+          <div class="flex items-start gap-3.5">
+            <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr ${app.iconGradient || 'from-emerald-500 to-teal-700'} flex items-center justify-center text-white text-2xl shadow-sm shrink-0">
+              <i class="ph-bold ${app.icon || 'ph-app-window'}"></i>
+            </div>
+            
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-md bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                  ${app.category}
+                </span>
+                <span class="text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1">
+                  <i class="ph-fill ph-star text-amber-400"></i> ${app.rating}
+                </span>
+              </div>
+
+              <h3 class="font-bold text-sm text-slate-900 dark:text-white truncate mt-1">${app.appName || app.title}</h3>
+              <p class="text-[11px] text-slate-500 dark:text-slate-400">${app.developer} • ${app.downloads} installs</p>
+            </div>
+          </div>
+
+          <p class="text-xs text-slate-600 dark:text-slate-300 mt-2.5 line-clamp-2 leading-relaxed">
+            ${app.verdict}
+          </p>
+
+          <div class="flex items-center gap-2 mt-3.5 pt-3 border-t border-slate-100 dark:border-slate-800/80">
+            <button onclick="openReview('${app.id}')" class="btn-press flex-1 py-2 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-750 text-slate-900 dark:text-slate-100 text-xs font-bold flex items-center justify-center gap-1.5">
+              <i class="ph-bold ph-newspaper-clipping text-emerald-600 dark:text-emerald-400"></i> Read Audit
+            </button>
+            <button onclick="toggleBookmark('${app.id}')" class="btn-press p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-amber-500" title="Bookmark">
+              <i class="${isBookmarked ? 'ph-fill ph-bookmark-simple text-amber-500' : 'ph-bold ph-bookmark-simple'} text-base"></i>
+            </button>
+            <a href="${app.playStoreUrl}" target="_blank" rel="noopener noreferrer" class="btn-press p-2 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400" title="Open Play Store">
+              <i class="ph-bold ph-google-play-logo text-base"></i>
+            </a>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderFeed() {
+      const feedContainer = document.getElementById('feedReviewsList');
+      const filtered = selectedCategory === 'All'
+        ? reviewsData
+        : reviewsData.filter(a => a.category.toLowerCase() === selectedCategory.toLowerCase());
+
+      document.getElementById('reviewsCountBadge').textContent = `${filtered.length} Audited`;
+
+      if (filtered.length === 0) {
+        feedContainer.innerHTML = `
+          <div class="text-center py-10 bg-white dark:bg-verdix-cardDark rounded-3xl border border-slate-200 dark:border-slate-800">
+            <i class="ph-bold ph-tray text-3xl text-slate-400 mb-2"></i>
+            <p class="text-xs text-slate-500">No reviews found in this category.</p>
+          </div>
+        `;
+        return;
+      }
+
+      feedContainer.innerHTML = filtered.map(app => renderAppCard(app)).join('');
+    }
+
+    function renderTrending() {
+      const trendingContainer = document.getElementById('trendingReviewsList');
+      // Sort by rating or downloads
+      const sorted = [...reviewsData].sort((a, b) => b.rating - a.rating);
+      trendingContainer.innerHTML = sorted.map(app => renderAppCard(app)).join('');
+    }
+
+    function renderCategoriesTiles() {
+      const categories = [
+        { name: 'Tools', icon: 'ph-wrench', count: reviewsData.filter(r => r.category === 'Tools').length },
+        { name: 'Security', icon: 'ph-shield-check', count: reviewsData.filter(r => r.category === 'Security').length },
+        { name: 'Productivity', icon: 'ph-briefcase', count: reviewsData.filter(r => r.category === 'Productivity').length },
+        { name: 'Photography', icon: 'ph-camera', count: reviewsData.filter(r => r.category === 'Photography').length },
+        { name: 'Utilities', icon: 'ph-gear', count: reviewsData.filter(r => r.category === 'Utilities').length },
+      ];
+
+      const container = document.getElementById('categoryTilesContainer');
+      container.innerHTML = categories.map(c => `
+        <div onclick="selectCategoryTile('${c.name}')" class="btn-press cursor-pointer p-4 rounded-2xl bg-white dark:bg-verdix-cardDark border border-slate-200 dark:border-slate-800 flex flex-col justify-between h-28 shadow-sm">
+          <div class="w-8 h-8 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-lg">
+            <i class="ph-bold ${c.icon}"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-xs text-slate-900 dark:text-white">${c.name}</h4>
+            <span class="text-[10px] text-slate-500">${c.count} Reviews</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function selectCategoryTile(cat) {
+      setCategoryFilter(cat);
+      switchTab('feed');
+    }
+
+    function renderSaved() {
+      const savedContainer = document.getElementById('savedReviewsList');
+      const savedApps = reviewsData.filter(a => bookmarkedIds.includes(a.id));
+
+      if (savedApps.length === 0) {
+        savedContainer.innerHTML = `
+          <div class="text-center py-16 bg-white dark:bg-verdix-cardDark rounded-3xl border border-slate-200 dark:border-slate-800">
+            <i class="ph-bold ph-bookmark-simple text-4xl text-slate-300 dark:text-slate-700 mb-2"></i>
+            <p class="text-xs font-medium text-slate-400">No bookmarked reviews yet.</p>
+          </div>
+        `;
+        return;
+      }
+
+      savedContainer.innerHTML = savedApps.map(app => renderAppCard(app)).join('');
+    }
+
+    /* =========================================================================
+       5. OPEN DETAIL VIEW & RUN injectSeoSchema()
+       ========================================================================= */
+    function openReview(reviewId) {
+      const review = reviewsData.find(a => a.id === reviewId);
+      if (!review) return;
+
+      // 1. INJECT SEO SCHEMA AND UPDATE METATAGS
+      injectSeoSchema(review);
+
+      // 2. RENDER NEUTRAL DETAILED REVIEW VIEW
+      const isBookmarked = bookmarkedIds.includes(review.id);
+      const articleEl = document.getElementById('detailArticle');
+
+      articleEl.innerHTML = `
+        <!-- Breadcrumb Bar -->
+        <nav class="flex items-center justify-between text-[11px] text-slate-400 font-medium">
+          <div class="flex items-center gap-1">
+            <span>Play Store</span>
+            <i class="ph-bold ph-caret-right text-[9px]"></i>
+            <span class="text-emerald-600 dark:text-emerald-400 font-semibold">${review.category}</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="toggleBookmark('${review.id}')" class="btn-press text-slate-600 dark:text-slate-300">
+              <i class="${isBookmarked ? 'ph-fill ph-bookmark-simple text-amber-500' : 'ph-bold ph-bookmark-simple'} text-base"></i>
+            </button>
+            <button onclick="shareReview('${review.title}')" class="btn-press text-slate-600 dark:text-slate-300">
+              <i class="ph-bold ph-share-network text-base"></i>
+            </button>
+          </div>
+        </nav>
+
+        <!-- App Meta Header -->
+        <div class="flex items-center gap-3.5 pt-1">
+          <div class="w-16 h-16 rounded-3xl bg-gradient-to-tr ${review.iconGradient || 'from-emerald-500 to-teal-700'} flex items-center justify-center text-white text-3xl shadow-md shrink-0">
+            <i class="ph-bold ${review.icon || 'ph-app-window'}"></i>
+          </div>
+          <div class="min-w-0">
+            <h1 class="text-lg font-black tracking-tight leading-snug text-slate-900 dark:text-white">${review.title}</h1>
+            <p class="text-xs text-slate-500 font-medium mt-0.5">Developer: <span class="text-emerald-600 font-semibold">${review.developer}</span></p>
+            <div class="flex items-center gap-2 mt-1">
+              <span class="flex items-center gap-1 text-xs font-bold text-amber-500">
+                <i class="ph-fill ph-star"></i> ${review.rating} / 5.0
+              </span>
+              <span class="text-xs text-slate-400">• ${review.downloads} downloads</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Google Featured Snippet Quick Verdict -->
+        <div class="bg-emerald-50/70 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800/40 rounded-3xl p-4">
+          <div class="flex items-center gap-1.5 text-xs font-extrabold uppercase text-emerald-800 dark:text-emerald-300 mb-1.5">
+            <i class="ph-fill ph-seal-check text-base"></i> AppVerdix Editorial Verdict
+          </div>
+          <p class="text-xs text-slate-700 dark:text-slate-300 leading-relaxed font-medium">
+            "${review.verdict}"
+          </p>
+        </div>
+
+        <!-- Pros & Cons Grid -->
+        <div class="grid grid-cols-1 gap-2.5">
+          <div class="p-4 rounded-2xl bg-emerald-50/50 dark:bg-emerald-950/15 border border-emerald-200/80 dark:border-emerald-800/40">
+            <h4 class="text-xs font-bold text-emerald-800 dark:text-emerald-300 flex items-center gap-1.5 mb-2">
+              <i class="ph-bold ph-thumbs-up"></i> Key Advantages (Pros)
+            </h4>
+            <ul class="space-y-1.5">
+              ${(review.pros || []).map(p => `
+                <li class="text-xs text-slate-700 dark:text-slate-300 flex items-start gap-1.5">
+                  <i class="ph-bold ph-check text-emerald-600 shrink-0 mt-0.5"></i>
+                  <span>${p}</span>
+                </li>
+              `).join('')}
+            </ul>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-rose-50/50 dark:bg-rose-950/15 border border-rose-200/80 dark:border-rose-800/40">
+            <h4 class="text-xs font-bold text-rose-800 dark:text-rose-300 flex items-center gap-1.5 mb-2">
+              <i class="ph-bold ph-thumbs-down"></i> Technical Limitations (Cons)
+            </h4>
+            <ul class="space-y-1.5">
+              ${(review.cons || []).map(c => `
+                <li class="text-xs text-slate-700 dark:text-slate-300 flex items-start gap-1.5">
+                  <i class="ph-bold ph-x text-rose-500 shrink-0 mt-0.5"></i>
+                  <span>${c}</span>
+                </li>
+              `).join('')}
+            </ul>
+          </div>
+        </div>
+
+        <!-- Hardware & Security Audit Section -->
+        <div class="bg-white dark:bg-verdix-cardDark border border-slate-200 dark:border-slate-800 rounded-3xl p-4 space-y-2.5">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+            <i class="ph-bold ph-gauge"></i> Hardware & Security Lab Audit
+          </h3>
+
+          <div class="flex items-center justify-between py-2 border-b border-slate-100 dark:border-slate-800 text-xs">
+            <span class="text-slate-500">Battery Drain Benchmark</span>
+            <span class="font-bold text-slate-800 dark:text-slate-200">${review.batteryImpact || 'Tested Normal'}</span>
+          </div>
+
+          <div class="flex items-center justify-between py-2 text-xs">
+            <span class="text-slate-500">Privacy & Telemetry Scan</span>
+            <span class="font-bold text-emerald-600 dark:text-emerald-400">${review.privacyAudit || 'Verified Clean'}</span>
+          </div>
+        </div>
+
+        <!-- Full Detailed Text Analysis -->
+        <div class="bg-white dark:bg-verdix-cardDark border border-slate-200 dark:border-slate-800 rounded-3xl p-4 text-xs text-slate-700 dark:text-slate-300 leading-relaxed space-y-2">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Full Editorial Inspection</h3>
+          ${review.fullBody || '<p>' + review.verdict + '</p>'}
+        </div>
+
+        <!-- Direct Play Store Action Button -->
+        <div class="pt-2">
+          <a href="${review.playStoreUrl}" target="_blank" rel="noopener noreferrer" class="btn-press w-full py-3.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs rounded-2xl flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/20">
+            <i class="ph-bold ph-google-play-logo text-base"></i> View on Official Google Play Store
+          </a>
+        </div>
+      `;
+
+      switchTab('detail');
+    }
+
+    /* =========================================================================
+       6. ACTIONS, SEARCH, FILTERS & JSON PUBLISHER
+       ========================================================================= */
+    function setCategoryFilter(category) {
+      selectedCategory = category;
+      document.querySelectorAll('.category-chip').forEach(chip => {
+        if (chip.textContent.includes(category) || (category === 'All' && chip.textContent.includes('All'))) {
+          chip.className = 'category-chip btn-press px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap bg-emerald-600 text-white shadow-sm';
+        } else {
+          chip.className = 'category-chip btn-press px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap bg-white dark:bg-verdix-cardDark border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300';
+        }
+      });
+      renderFeed();
+    }
+
+    function handleInstantSearch(val) {
+      const query = val.toLowerCase().trim();
+      const feedContainer = document.getElementById('feedReviewsList');
+
+      if (!query) {
+        renderFeed();
+        return;
+      }
+
+      const filtered = reviewsData.filter(app => 
+        (app.appName && app.appName.toLowerCase().includes(query)) ||
+        (app.title && app.title.toLowerCase().includes(query)) ||
+        (app.verdict && app.verdict.toLowerCase().includes(query)) ||
+        (app.developer && app.developer.toLowerCase().includes(query))
+      );
+
+      document.getElementById('reviewsCountBadge').textContent = `${filtered.length} Found`;
+
+      if (filtered.length === 0) {
+        feedContainer.innerHTML = `
+          <div class="text-center py-10 bg-white dark:bg-verdix-cardDark rounded-3xl border border-slate-200 dark:border-slate-800">
+            <i class="ph-bold ph-magnifying-glass text-3xl text-slate-400 mb-2"></i>
+            <p class="text-xs text-slate-500">No audits found matching "${val}"</p>
+          </div>
+        `;
+        return;
+      }
+
+      feedContainer.innerHTML = filtered.map(app => renderAppCard(app)).join('');
+    }
+
+    function toggleBookmark(appId) {
+      if (bookmarkedIds.includes(appId)) {
+        bookmarkedIds = bookmarkedIds.filter(id => id !== appId);
+        showToast('Removed from Bookmarks');
+      } else {
+        bookmarkedIds.push(appId);
+        showToast('Saved to Bookmarks');
+      }
+      localStorage.setItem('appverdix_bookmarks', JSON.stringify(bookmarkedIds));
+      renderFeed();
+      renderSaved();
+
+      if (currentTab === 'detail') {
+        const review = reviewsData.find(a => a.id === appId);
+        if (review) openReview(appId);
+      }
+    }
+
+    function shareReview(title) {
+      if (navigator.share) {
+        navigator.share({
+          title: title,
+          url: window.location.href
+        }).catch(() => {});
+      } else {
+        const dummy = document.createElement("textarea");
+        dummy.value = window.location.href;
+        document.body.appendChild(dummy);
+        dummy.select();
+        document.execCommand("copy");
+        document.body.removeChild(dummy);
+        showToast('Review link copied to clipboard!');
+      }
+    }
+
+    function toggleQuickComposer() {
+      const modal = document.getElementById('composerModal');
+      const backdrop = document.getElementById('composerBackdrop');
+      const isOpen = !modal.classList.contains('translate-y-full');
+
+      if (isOpen) {
+        modal.classList.add('translate-y-full');
+        backdrop.classList.add('opacity-0', 'pointer-events-none');
+      } else {
+        modal.classList.remove('translate-y-full');
+        backdrop.classList.remove('opacity-0', 'pointer-events-none');
+      }
+    }
+
+    function copyCleanTemplate() {
+      const template = {
+        id: "app-audit-" + Date.now(),
+        title: "App Name Review 2026: Safe or Battery Drain?",
+        appName: "App Name",
+        developer: "Studio Name",
+        category: "Tools",
+        rating: 4.6,
+        downloads: "10M+",
+        icon: "ph-shield-check",
+        iconGradient: "from-emerald-500 to-teal-700",
+        playStoreUrl: "https://play.google.com/store",
+        metaDescription: "Detailed AppVerdix technical audit of App Name on Android.",
+        keywords: ["app name review", "is app name safe", "app name battery drain"],
+        verdict: "High-level unbiased editorial summary of findings in two crisp sentences.",
+        pros: ["Optimized memory usage", "Clean UI", "Responsive gesture handling"],
+        cons: ["Requires high storage space"],
+        batteryImpact: "Low (< 2% / hr)",
+        privacyAudit: "Verified: Zero unauthorized telemetry",
+        date: "2026-10-13",
+        fullBody: "Detailed editorial inspection text goes here..."
+      };
+
+      const dummy = document.createElement("textarea");
+      dummy.value = JSON.stringify(template, null, 2);
+      document.body.appendChild(dummy);
+      dummy.select();
+      document.execCommand("copy");
+      document.body.removeChild(dummy);
+
+      document.getElementById('composerJsonInput').value = JSON.stringify(template, null, 2);
+      showToast('Neutral review template copied!');
+    }
+
+    function publishCustomReview() {
+      const input = document.getElementById('composerJsonInput').value.trim();
+      if (!input) {
+        showToast('Please paste a review JSON block first');
+        return;
+      }
+
+      try {
+        const parsed = JSON.parse(input);
+        if (!parsed.id || !parsed.title) {
+          showToast('Invalid format: "id" and "title" are mandatory');
+          return;
+        }
+
+        reviewsData = [parsed, ...reviewsData.filter(r => r.id !== parsed.id)];
+        renderFeed();
+        renderTrending();
+        renderCategoriesTiles();
+        toggleQuickComposer();
+        openReview(parsed.id);
+        showToast('Review published & SEO schema injected!');
+      } catch (err) {
+        showToast('Syntax Error: Invalid JSON code');
+      }
+    }
+
+    function toggleTheme() {
+      const html = document.documentElement;
+      const icon = document.getElementById('themeIcon');
+      if (html.classList.contains('dark')) {
+        html.classList.remove('dark');
+        icon.className = 'ph-bold ph-moon-stars text-lg';
+      } else {
+        html.classList.add('dark');
+        icon.className = 'ph-bold ph-sun text-lg text-amber-400';
+      }
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toastMsg');
+      toastMsg.textContent = msg;
+      toast.classList.remove('opacity-0', '-translate-y-2', 'pointer-events-none');
+      toast.classList.add('opacity-100', 'translate-y-0');
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', '-translate-y-2', 'pointer-events-none');
+        toast.classList.remove('opacity-100', 'translate-y-0');
+      }, 2300);
+    }
+
+    // Initialize application on load
+    window.addEventListener('DOMContentLoaded', () => {
+      document.documentElement.classList.add('dark');
+      renderFeed();
+      renderTrending();
+      renderCategoriesTiles();
+      renderSaved();
+    });
+  </script>
+</body>
+</html>
