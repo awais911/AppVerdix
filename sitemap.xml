@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Main Homepage -->
+  <url>
+    <loc>https://awais911.github.io/AppVerdix/</loc>
+    <lastmod>2026-10-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Review 1: CapCut -->
+  <url>
+    <loc>https://awais911.github.io/AppVerdix/?review=capcut-audit-2026</loc>
+    <lastmod>2026-10-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Review 2: Bitwarden -->
+  <url>
+    <loc>https://awais911.github.io/AppVerdix/?review=bitwarden-security-audit</loc>
+    <lastmod>2026-10-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Review 3: Obsidian -->
+  <url>
+    <loc>https://awais911.github.io/AppVerdix/?review=obsidian-notes-review</loc>
+    <lastmod>2026-10-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+</urlset>
