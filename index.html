@@ -37,7 +37,6 @@
   </script>
 
   <style>
-    /* Custom Scrollbar */
     ::-webkit-scrollbar { width: 8px; height: 8px; }
     ::-webkit-scrollbar-track { background: #0b1120; }
     ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
@@ -66,7 +65,7 @@
         </div>
       </div>
 
-      <!-- Search Input (Desktop & Mobile) -->
+      <!-- Search Input -->
       <div class="flex-1 max-w-md mx-2 sm:mx-6">
         <div class="relative">
           <input type="text" id="searchInput" oninput="handleSearch(this.value)" placeholder="Search apps, tools, reviews..." 
@@ -84,27 +83,16 @@
           <span>Saved</span>
           <span id="savedCountBadge" class="bg-slate-800 text-cyan-400 text-xs px-1.5 py-0.2 rounded-full font-bold">0</span>
         </button>
-        <button onclick="openPublishModal()" class="ml-2 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white rounded-lg shadow-md transition">
-          + Add Review
-        </button>
       </div>
-
-      <!-- Mobile Quick Add Button -->
-      <button onclick="openPublishModal()" class="md:hidden p-2 rounded-lg bg-slate-800 text-cyan-400 border border-slate-700">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-        </svg>
-      </button>
 
     </div>
   </header>
 
-  <!-- ================= MAIN APP WRAPPER ================= -->
+  <!-- ================= MAIN WRAPPER ================= -->
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pb-24 md:pb-12">
     
     <!-- VIEW 1: HOME FEED -->
     <section id="view-feed" class="space-y-6">
-      
       <!-- Category Filter Pills -->
       <div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-2 pt-1" id="categoryChips">
         <button onclick="filterCategory('All')" class="cat-pill active px-4 py-1.5 rounded-full text-xs font-semibold bg-cyan-600 text-white transition whitespace-nowrap">All Audits</button>
@@ -114,7 +102,7 @@
         <button onclick="filterCategory('Tools & Utilities')" class="cat-pill px-4 py-1.5 rounded-full text-xs font-medium bg-slate-900 border border-slate-800 text-slate-400 hover:text-slate-200 transition whitespace-nowrap">Tools & Utilities</button>
       </div>
 
-      <!-- Feed Grid (Responsive: 1 col on mobile, 2 on tablet, 3 on PC) -->
+      <!-- Feed Grid -->
       <div id="reviewsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         <!-- Rendered by JS -->
       </div>
@@ -122,18 +110,16 @@
 
     <!-- VIEW 2: SAVED / BOOKMARKS -->
     <section id="view-bookmarks" class="hidden space-y-6">
-      <div class="flex items-center justify-between border-b border-slate-800 pb-4">
-        <div>
-          <h2 class="text-xl font-bold text-white">Saved App Reviews</h2>
-          <p class="text-xs text-slate-400">Offline bookmarked audits saved in your browser.</p>
-        </div>
+      <div class="border-b border-slate-800 pb-4">
+        <h2 class="text-xl font-bold text-white">Saved App Reviews</h2>
+        <p class="text-xs text-slate-400">Offline bookmarked audits saved in your browser.</p>
       </div>
       <div id="bookmarksGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         <!-- Rendered by JS -->
       </div>
     </section>
 
-    <!-- VIEW 3: IN-DEPTH REVIEW DETAIL (RESPONSIVE 2-COL ON DESKTOP) -->
+    <!-- VIEW 3: REVIEW DETAIL (RESPONSIVE 2-COL ON PC) -->
     <section id="view-detail" class="hidden">
       <!-- Back Navigation Bar -->
       <div class="mb-6 flex items-center justify-between">
@@ -153,14 +139,12 @@
         </div>
       </div>
 
-      <!-- Main Responsive Content Layout -->
+      <!-- Content Grid Layout -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
-        <!-- Left Column: Primary Review Text & Analysis (8 Cols) -->
+        <!-- Left: Body Content (8 Cols) -->
         <div class="lg:col-span-8 space-y-6">
-          
-          <!-- App Header Card -->
-          <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 relative overflow-hidden">
+          <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6">
             <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
               <img id="detail-icon" src="" alt="App Icon" class="w-16 h-16 rounded-2xl shadow-md border border-slate-800 object-cover bg-slate-800">
               <div class="flex-1">
@@ -169,29 +153,25 @@
                 <div class="flex items-center gap-4 text-xs text-slate-400 mt-2">
                   <span id="detail-author" class="text-slate-300 font-medium">By AppVerdix Labs</span>
                   <span>•</span>
-                  <span id="detail-date">Updated Recently</span>
-                  <span>•</span>
                   <span id="detail-downloads" class="text-cyan-400">100M+ Downloads</span>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- Quick Editorial Verdict Banner -->
+          <!-- Verdict Banner -->
           <div class="bg-cyan-950/20 border border-cyan-800/40 rounded-2xl p-5">
             <h3 class="text-xs font-bold uppercase tracking-wider text-cyan-400 flex items-center gap-2 mb-2">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
               The AppVerdix Verdict
             </h3>
-            <p id="detail-verdict" class="text-slate-200 text-sm sm:text-base leading-relaxed">Editorial verdict summary...</p>
+            <p id="detail-verdict" class="text-slate-200 text-sm sm:text-base leading-relaxed"></p>
           </div>
 
-          <!-- Full Body Text -->
-          <article class="bg-slate-900/60 border border-slate-800/80 rounded-2xl p-6 sm:p-8 space-y-4 text-slate-300 text-sm sm:text-base leading-relaxed" id="detail-body">
-            <!-- Article Body Injected by JS -->
-          </article>
+          <!-- Full Article -->
+          <article class="bg-slate-900/60 border border-slate-800/80 rounded-2xl p-6 sm:p-8 space-y-4 text-slate-300 text-sm sm:text-base leading-relaxed" id="detail-body"></article>
 
-          <!-- Pros and Cons Section -->
+          <!-- Pros & Cons -->
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div class="bg-slate-900/90 border border-emerald-900/40 rounded-2xl p-5">
               <h4 class="text-sm font-bold text-emerald-400 uppercase tracking-wider mb-3 flex items-center gap-2">
@@ -208,16 +188,12 @@
               <ul id="detail-cons" class="space-y-2 text-xs sm:text-sm text-slate-300"></ul>
             </div>
           </div>
-
         </div>
 
-        <!-- Right Column: Sticky Sidebar Metric Widget (4 Cols) -->
+        <!-- Right: Sidebar Widget (4 Cols) -->
         <aside class="lg:col-span-4 space-y-5 lg:sticky lg:top-24">
-          
-          <!-- Rating & Specs Card -->
           <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
             <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4">Audit Scorecard</h3>
-            
             <div class="flex items-center justify-between pb-4 border-b border-slate-800">
               <div>
                 <span class="text-4xl font-black text-cyan-400" id="detail-rating">4.5</span>
@@ -226,40 +202,29 @@
               <div class="flex text-amber-400 text-lg">★★★★★</div>
             </div>
 
-            <!-- Hardware & Privacy Audit Metrics -->
             <div class="space-y-3 pt-4 text-xs font-medium">
               <div class="flex justify-between items-center text-slate-300">
                 <span class="text-slate-400">Battery Impact:</span>
-                <span class="text-emerald-400 font-mono font-bold" id="detail-battery">Low (~1.2%/hr)</span>
+                <span class="text-emerald-400 font-mono font-bold" id="detail-battery">Low</span>
               </div>
               <div class="flex justify-between items-center text-slate-300">
                 <span class="text-slate-400">Memory Usage:</span>
-                <span class="text-slate-200 font-mono font-bold" id="detail-ram">~95 MB RAM</span>
+                <span class="text-slate-200 font-mono font-bold" id="detail-ram">~90 MB</span>
               </div>
               <div class="flex justify-between items-center text-slate-300">
                 <span class="text-slate-400">Data Trackers:</span>
-                <span class="text-cyan-400 font-mono font-bold" id="detail-trackers">2 Found</span>
-              </div>
-              <div class="flex justify-between items-center text-slate-300">
-                <span class="text-slate-400">Target Platform:</span>
-                <span class="text-slate-200 font-bold">Android 10+</span>
+                <span class="text-cyan-400 font-mono font-bold" id="detail-trackers">0 Trackers</span>
               </div>
             </div>
 
             <div class="mt-6 pt-4 border-t border-slate-800">
-              <a id="detail-storeLink" href="https://play.google.com/store" target="_blank" rel="noopener noreferrer" 
-                class="w-full flex items-center justify-center gap-2 py-3 bg-cyan-600 hover:bg-cyan-500 text-white rounded-xl font-bold text-xs uppercase tracking-wider transition shadow-lg shadow-cyan-600/20">
-                <span>View On Google Play</span>
+              <a href="https://play.google.com/store" target="_blank" rel="noopener noreferrer" 
+                class="w-full flex items-center justify-center gap-2 py-3 bg-cyan-600 hover:bg-cyan-500 text-white rounded-xl font-bold text-xs uppercase tracking-wider transition">
+                <span>View On Play Store</span>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
               </a>
             </div>
           </div>
-
-          <!-- Disclosure Badge -->
-          <div class="bg-slate-900/40 border border-slate-800 rounded-xl p-4 text-[11px] text-slate-500 leading-normal">
-            <strong>AppVerdix Standard:</strong> All apps reviewed are audited on physical Android hardware. We do not accept paid ratings from developers.
-          </div>
-
         </aside>
 
       </div>
@@ -267,159 +232,32 @@
 
   </main>
 
-  <!-- ================= MOBILE BOTTOM NAVIGATION BAR ================= -->
+  <!-- ================= MOBILE BOTTOM NAVIGATION ================= -->
   <nav class="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#0f172a]/95 backdrop-blur-md border-t border-slate-800 py-2 px-6 flex justify-around items-center">
-    <button onclick="navigateTo('feed')" class="flex flex-col items-center gap-1 text-cyan-400 text-[10px] font-semibold" id="mNav-feed">
+    <button onclick="navigateTo('feed')" class="flex flex-col items-center gap-1 text-cyan-400 text-[10px] font-semibold">
       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
       <span>Audits</span>
     </button>
-    <button onclick="navigateTo('bookmarks')" class="flex flex-col items-center gap-1 text-slate-400 text-[10px] font-medium" id="mNav-bookmarks">
+    <button onclick="navigateTo('bookmarks')" class="flex flex-col items-center gap-1 text-slate-400 text-[10px] font-medium">
       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path></svg>
       <span>Saved</span>
     </button>
-    <button onclick="openPublishModal()" class="flex flex-col items-center gap-1 text-slate-400 text-[10px] font-medium">
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-      <span>Publish</span>
-    </button>
   </nav>
 
-  <!-- ================= PUBLISHER / JSON MODAL ================= -->
-  <div id="publishModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto p-6 space-y-4">
-      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
-        <h3 class="text-base font-bold text-white">AppVerdix Fast Review Publisher</h3>
-        <button onclick="closePublishModal()" class="text-slate-400 hover:text-white text-lg">✕</button>
-      </div>
+  <!-- External Reviews Data Link (Yahan se data load hota hai) -->
+  <script src="reviews.js"></script>
 
-      <p class="text-xs text-slate-400 leading-relaxed">
-        Gemini se generated JSON block yahan paste karein aur direct test karein:
-      </p>
-
-      <textarea id="jsonInput" rows="10" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 font-mono text-xs text-cyan-300 focus:outline-none focus:border-cyan-500" placeholder='{
-  "id": "app-id",
-  "title": "Sample App Review",
-  "category": "Tools & Utilities",
-  "rating": 4.5,
-  "downloads": "10M+",
-  "appIcon": "https://...",
-  "verdict": "Great tool with solid performance...",
-  "battery": "Low (~1.5%/hr)",
-  "ram": "80 MB",
-  "trackers": "1 Found",
-  "pros": ["Lightweight", "No ads"],
-  "cons": ["Limited export options"],
-  "fullBody": "Full article text here..."
-}'></textarea>
-
-      <div class="flex justify-end gap-3 pt-2">
-        <button onclick="copySampleTemplate()" class="px-4 py-2 bg-slate-800 text-slate-300 text-xs font-semibold rounded-lg hover:bg-slate-700">Copy Template</button>
-        <button onclick="publishJsonReview()" class="px-5 py-2 bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold rounded-lg shadow-md">Add to Feed</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ================= CORE DATABASE & APPLICATION LOGIC ================= -->
+  <!-- Application Logic -->
   <script>
-    // 1. Initial Review Database (Editorial Seed Data)
-    let reviewsData = [
-      {
-        id: "capcut-audit-2026",
-        title: "CapCut Video Editor Review: Performance, Privacy & Feature Audit",
-        category: "Video & Audio",
-        rating: 4.6,
-        downloads: "500M+",
-        appIcon: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=150&q=80",
-        metaDescription: "In-depth 2026 AppVerdix review of CapCut. We analyze rendering times, hardware memory benchmarks, export controls, and privacy indicators.",
-        keywords: "capcut review, capcut video editor android, capcut safe or not, video editing android",
-        verdict: "An unmatched creative suite for mobile content creators, but background sync behaviors warrant attention on budget devices.",
-        battery: "Medium (~4.2%/hr active rendering)",
-        ram: "240 MB Average",
-        trackers: "3 Analytics Trackers",
-        pros: [
-          "Desktop-grade keyframe animation & velocity curves",
-          "Comprehensive audio sync & AI voice isolation",
-          "Fast hardware-accelerated 4K 60fps export"
-        ],
-        cons: [
-          "Aggressive background cloud project sync",
-          "Can overheat mid-tier processors during heavy multitrack timelines"
-        ],
-        fullBody: `
-          <p>CapCut continues to dominate the vertical video landscape with unmatched template accessibility and lightning-fast timeline trimming. Over our 14-day hardware audit on Android 14, rendering workflows clocked consistent stability across both high-end and mid-range chipsets.</p>
-          <h4 class="text-white font-bold text-base mt-4 mb-2">Hardware Benchmarks & Rendering</h4>
-          <p>Exporting a 60-second 4K timeline loaded with three adjustment layers and two audio tracks took 38 seconds on Snapdragon 8 Gen 2 hardware, consuming roughly 2.8% battery life. Memory allocation remained capped at under 320 MB during continuous scrub testing.</p>
-          <h4 class="text-white font-bold text-base mt-4 mb-2">Privacy & Network Traffic Audit</h4>
-          <p>Packet inspections revealed scheduled background diagnostics beacons every 45 minutes when notifications are enabled. Users mindful of idle battery consumption are advised to restrict background battery activity in Android app settings.</p>
-        `
-      },
-      {
-        id: "bitwarden-security-audit",
-        title: "Bitwarden Password Manager: Android Security & Autofill Reliability Test",
-        category: "Security & VPN",
-        rating: 4.9,
-        downloads: "10M+",
-        appIcon: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=150&q=80",
-        metaDescription: "Hands-on audit of Bitwarden for Android. Zero-knowledge encryption, accessibility service reliability, and biometric authentication benchmarks.",
-        keywords: "bitwarden android review, best password manager android, open source password manager",
-        verdict: "The gold standard for transparent, open-source credential management on Android without commercial telemetry bloat.",
-        battery: "Minimal (< 0.4%/hr)",
-        ram: "55 MB RAM",
-        trackers: "0 Commercial Trackers",
-        pros: [
-          "Fully audited open-source end-to-end encryption",
-          "Flawless Android autofill integration across Chrome & apps",
-          "Zero proprietary analytical tracking scripts"
-        ],
-        cons: [
-          "UI configuration is functional rather than flashy",
-          "Requires manual vault sync on intermittent connections"
-        ],
-        fullBody: `
-          <p>For users seeking uncompromised credential privacy, Bitwarden represents the pinnacle of ethical software design on Android. Operating with a zero-knowledge architecture, master encryption occurs exclusively on-device before any synchronization takes place.</p>
-          <h4 class="text-white font-bold text-base mt-4 mb-2">Autofill Speed & Biometrics</h4>
-          <p>Tested against 45 common applications and browser login portals, Bitwarden's Android Autofill framework triggered reliably in 97.8% of instances. Fingerprint-to-fill latency averaged 210 milliseconds, making it virtually instantaneous.</p>
-        `
-      },
-      {
-        id: "obsidian-notes-review",
-        title: "Obsidian Notes: Local Markdown Knowledge Base on Mobile",
-        category: "Productivity",
-        rating: 4.7,
-        downloads: "5M+",
-        appIcon: "https://images.unsplash.com/photo-1517842645767-c639042777db?auto=format&fit=crop&w=150&q=80",
-        metaDescription: "Obsidian Mobile audited for Android: Offline Markdown storage, plugin ecosystem speed, and local vault sync efficiency.",
-        keywords: "obsidian android review, best markdown note taking app, offline notes android",
-        verdict: "An offline-first titan for researchers and thinkers, retaining full local file sovereignty on your phone storage.",
-        battery: "Low (~0.9%/hr)",
-        ram: "110 MB RAM",
-        trackers: "0 Trackers",
-        pros: [
-          "100% local plain-text Markdown file ownership",
-          "Vast community plugin repository directly on mobile",
-          "Complete offline independence without cloud lock-in"
-        ],
-        cons: [
-          "Slightly longer initial cold launch latency (~1.4s)",
-          "Requires basic familiarity with Markdown formatting"
-        ],
-        fullBody: `
-          <p>Obsidian avoids cloud silos completely. Your notes are simply `.md` files residing in your phone's internal storage or an SD card folder, allowing external backup via Syncthing or Git.</p>
-        `
-      }
-    ];
-
-    // Local Storage Bookmarks
     let savedBookmarks = JSON.parse(localStorage.getItem('appverdix_bookmarks') || '[]');
     let currentActiveReview = null;
     let currentCategory = 'All';
 
-    // 2. SEO Schema Injection Function (Requested by User)
+    // Google Search SEO & Stars Schema Injector
     function injectSeoSchema(review) {
-      // Purana schema remove karein
       const oldScript = document.getElementById("review-schema");
       if (oldScript) oldScript.remove();
 
-      // Naya Google-optimized JSON-LD schema inject karein
       const script = document.createElement("script");
       script.id = "review-schema";
       script.type = "application/ld+json";
@@ -442,7 +280,6 @@
       });
       document.head.appendChild(script);
 
-      // Meta tags synchronisation
       document.title = `${review.title} | AppVerdix`;
       const descMeta = document.getElementById("page-description");
       if (descMeta && review.metaDescription) descMeta.content = review.metaDescription;
@@ -450,13 +287,12 @@
       if (kwMeta && review.keywords) kwMeta.content = review.keywords;
     }
 
-    // 3. Render Reviews Feed
     function renderFeed(items) {
       const grid = document.getElementById('reviewsGrid');
       grid.innerHTML = '';
 
-      if (items.length === 0) {
-        grid.innerHTML = `<div class="col-span-full py-12 text-center text-slate-500 text-sm">No matching reviews found.</div>`;
+      if (!items || items.length === 0) {
+        grid.innerHTML = `<div class="col-span-full py-12 text-center text-slate-500 text-sm">No reviews found. Check reviews.js file.</div>`;
         return;
       }
 
@@ -500,15 +336,14 @@
       });
     }
 
-    // 4. Open Detail View
     function openDetail(id) {
+      if (typeof reviewsData === 'undefined') return;
       const review = reviewsData.find(r => r.id === id);
       if (!review) return;
 
       currentActiveReview = review;
       injectSeoSchema(review);
 
-      // Populate Detail View
       document.getElementById('detail-title').innerText = review.title;
       document.getElementById('detail-category').innerText = review.category;
       document.getElementById('detail-icon').src = review.appIcon;
@@ -521,7 +356,6 @@
       document.getElementById('detail-ram').innerText = review.ram || '~100 MB';
       document.getElementById('detail-trackers').innerText = review.trackers || '0 Trackers';
 
-      // Pros & Cons
       const prosContainer = document.getElementById('detail-pros');
       prosContainer.innerHTML = '';
       (review.pros || []).forEach(p => {
@@ -539,7 +373,6 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // 5. Navigation Router
     function navigateTo(viewName) {
       document.getElementById('view-feed').classList.add('hidden');
       document.getElementById('view-bookmarks').classList.add('hidden');
@@ -556,8 +389,8 @@
       }
     }
 
-    // 6. Category Filter
     function filterCategory(cat) {
+      if (typeof reviewsData === 'undefined') return;
       currentCategory = cat;
       document.querySelectorAll('.cat-pill').forEach(btn => {
         if (btn.innerText.includes(cat) || (cat === 'All' && btn.innerText.includes('All'))) {
@@ -574,8 +407,8 @@
       }
     }
 
-    // 7. Search Handler
     function handleSearch(query) {
+      if (typeof reviewsData === 'undefined') return;
       const q = query.toLowerCase().trim();
       if (!q) {
         filterCategory(currentCategory);
@@ -589,7 +422,6 @@
       renderFeed(filtered);
     }
 
-    // 8. Bookmarks Management
     function toggleBookmark(id) {
       if (savedBookmarks.includes(id)) {
         savedBookmarks = savedBookmarks.filter(b => b !== id);
@@ -614,6 +446,7 @@
     }
 
     function renderBookmarks() {
+      if (typeof reviewsData === 'undefined') return;
       const grid = document.getElementById('bookmarksGrid');
       grid.innerHTML = '';
       const bookmarkedItems = reviewsData.filter(r => savedBookmarks.includes(r.id));
@@ -640,51 +473,12 @@
       });
     }
 
-    // 9. Publisher Modal Functions
-    function openPublishModal() { document.getElementById('publishModal').classList.remove('hidden'); }
-    function closePublishModal() { document.getElementById('publishModal').classList.add('hidden'); }
-
-    function copySampleTemplate() {
-      const sample = {
-        id: "new-app-" + Date.now(),
-        title: "App Name: In-Depth Android Performance Review",
-        category: "Tools & Utilities",
-        rating: 4.5,
-        downloads: "10M+",
-        appIcon: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=150&q=80",
-        metaDescription: "Short search meta description here...",
-        keywords: "app review, android tools",
-        verdict: "High-speed and reliable tool for everyday use.",
-        battery: "Low (~1.1%/hr)",
-        ram: "70 MB",
-        trackers: "1 Tracker",
-        pros: ["Clean interface", "Fast operation"],
-        cons: ["Occasional prompt for feedback"],
-        fullBody: "<p>Comprehensive review text goes here...</p>"
-      };
-      document.getElementById('jsonInput').value = JSON.stringify(sample, null, 2);
-    }
-
-    function publishJsonReview() {
-      try {
-        const parsed = JSON.parse(document.getElementById('jsonInput').value);
-        if (!parsed.id || !parsed.title) {
-          alert('JSON must include at least "id" and "title"');
-          return;
-        }
-        reviewsData.unshift(parsed);
-        renderFeed(reviewsData);
-        closePublishModal();
-        alert('Review added successfully to local feed!');
-      } catch (err) {
-        alert('Invalid JSON format: ' + err.message);
-      }
-    }
-
     // Initialize Page
     document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('savedCountBadge').innerText = savedBookmarks.length;
-      renderFeed(reviewsData);
+      if (typeof reviewsData !== 'undefined') {
+        renderFeed(reviewsData);
+      }
     });
   </script>
 </body>
