@@ -210,7 +210,7 @@
                 <span class="text-4xl font-black text-cyan-400" id="detail-rating">4.5</span>
                 <span class="text-slate-500 font-bold text-sm"> / 5.0</span>
               </div>
-              <div class="flex text-amber-400 text-lg">★★★★★</div>
+              <div class="flex text-lg" id="detail-rating-stars">★★★★★</div>
             </div>
 
             <div class="space-y-3 pt-4 text-xs font-medium">
@@ -368,6 +368,20 @@
       document.getElementById('detail-icon').src = review.appIcon;
       document.getElementById('detail-downloads').innerText = `${review.downloads} Installs`;
       document.getElementById('detail-rating').innerText = review.rating;
+      // Dynamic Stars Generator based on Score
+      const ratingStarsElem = document.getElementById('detail-rating-stars');
+      if (ratingStarsElem) {
+        const fullStars = Math.round(review.rating);
+        let starHtml = '';
+        for (let i = 1; i <= 5; i++) {
+          if (i <= fullStars) {
+            starHtml += '<span class="text-amber-400">★</span>';
+          } else {
+            starHtml += '<span class="text-slate-700">★</span>';
+          }
+        }
+        ratingStarsElem.innerHTML = starHtml;
+      }
       document.getElementById('detail-verdict').innerText = review.verdict;
       document.getElementById('detail-body').innerHTML = review.fullBody;
       
