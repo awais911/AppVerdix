@@ -164,6 +164,8 @@
                 <div class="flex items-center gap-4 text-xs text-slate-400 mt-2">
                   <span id="detail-author" class="text-slate-300 font-medium">By AppVerdix Labs</span>
                   <span>•</span>
+                  <span id="detail-date" class="text-slate-400">Updated: Recently</span>
+                  <span>•</span>
                   <span id="detail-downloads" class="text-cyan-400">100M+ Downloads</span>
                 </div>
               </div>
@@ -368,6 +370,13 @@
       document.getElementById('detail-icon').src = review.appIcon;
       document.getElementById('detail-downloads').innerText = `${review.downloads} Installs`;
       document.getElementById('detail-rating').innerText = review.rating;
+      // Auto Month & Year Generator (e.g., "Audited: October 2026")
+      const now = new Date();
+      const currentMonthYear = now.toLocaleString('en-US', { month: 'long', year: 'numeric' });
+      const displayDate = review.updatedDate || `Audited: ${currentMonthYear}`;
+      
+      const dateElem = document.getElementById('detail-date');
+      if (dateElem) dateElem.innerText = displayDate;
       // Dynamic Stars Generator based on Score
       const ratingStarsElem = document.getElementById('detail-rating-stars');
       if (ratingStarsElem) {
