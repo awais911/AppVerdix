@@ -91,14 +91,14 @@ const reviewsData = [
           </div>
         </div>
 
-        <!-- Section 3: Ad-Bloat and Free Tier Experience -->
+        <!-- Section 3 -->
         <div class="pt-2">
           <h3 class="text-white font-extrabold text-lg sm:text-xl flex items-center gap-2 mb-3">
             <span class="w-2.5 h-2.5 rounded-full bg-cyan-400 inline-block"></span>
             3. The Free Tier UI: Intrusive Post-Call Cards
           </h3>
           <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
-            The free version of Truecaller has grown increasingly intrusive. Immediately following the conclusion of any phone call, the application serves a full-screen completion window containing dynamic banner advertisements, promotional prompts to purchase Premium subscriptions, and contextual profile summaries. 
+            The free version of Truecaller has grown increasingly intrusive. Immediately following the conclusion of any phone call, the application serves a full-screen completion window containing dynamic banner advertisements, promotional prompts to purchase Premium subscriptions, and contextual profile summaries.
           </p>
           <p class="text-slate-300 text-sm sm:text-base leading-relaxed mt-2">
             For users seeking a clean native Android experience similar to the stock Google Phone dialer, Truecaller's visual footprint can feel congested and disruptive.
@@ -106,8 +106,41 @@ const reviewsData = [
         </div>
 
         <!-- Section 4: Tested FAQs (International English) -->
-        <div class ,
-  {
+        <div class="mt-8 pt-8 border-t border-slate-800/80">
+          <h3 class="text-white font-black text-xl mb-4 flex items-center gap-2">
+            <span class="text-cyan-400">⚡</span> Frequently Asked Questions (Technical &amp; Privacy Guide)
+          </h3>
+          
+          <div class="space-y-4">
+            <div class="bg-slate-950/80 border border-slate-800 rounded-xl p-5 hover:border-slate-700 transition">
+              <h4 class="text-white font-bold text-sm sm:text-base flex items-center gap-2">
+                <span class="text-cyan-400 font-mono font-bold">Q1:</span> How do I completely unlist and remove my private number from Truecaller?
+              </h4>
+              <p class="text-slate-300 text-xs sm:text-sm mt-2 leading-relaxed">
+                If you have an active account, you must first deactivate it inside the app under <em>Settings &gt; Privacy Center &gt; Deactivate</em>. Next, visit Truecaller's official unlisting portal (<code>truecaller.com/unlisting</code>), enter your phone number with your country code, verify the captcha, and click <strong>Unlist</strong>. Truecaller removes records from public search queries within 24 to 48 hours.
+              </p>
+            </div>
+
+            <div class="bg-slate-950/80 border border-slate-800 rounded-xl p-5 hover:border-slate-700 transition">
+              <h4 class="text-white font-bold text-sm sm:text-base flex items-center gap-2">
+                <span class="text-cyan-400 font-mono font-bold">Q2:</span> Does the official Google Phone app provide a safer alternative?
+              </h4>
+              <p class="text-slate-300 text-xs sm:text-sm mt-2 leading-relaxed">
+                <strong>Resolution:</strong> Yes. The standard <em>Google Phone</em> app incorporates native Google-verified caller ID and automated spam screening without uploading your personal contact book to third-party ad exchanges.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Highlighted Editorial Quote -->
+        <div class="p-5 rounded-2xl bg-slate-950 border-l-4 border-cyan-500 text-slate-300 text-xs sm:text-sm italic">
+          "Truecaller is the world's most capable spam shield, but it achieves that prowess through crowdsourced surveillance. You gain protection against unknown callers at the expense of your own address book's confidentiality."
+        </div>
+
+      </div>
+    `
+  },
+    {
     id: "whatsapp-mods-gb-gold-fm-safety-audit",
     title: "WhatsApp Mods Review (GB, Gold, FM, YoWhatsApp): Why You Should Never Install Them (2026 Audit)",
     category: "Security & VPN",
