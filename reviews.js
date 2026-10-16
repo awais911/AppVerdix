@@ -462,8 +462,7 @@ const reviewsData = [
       </div>
     `
   },
-  {
-    {
+   {
     id: "capcut-audit-2026",
     title: "CapCut Video Editor Review: Performance, Privacy & Pro Paywall Audit (2026)",
     category: "Video & Audio",
